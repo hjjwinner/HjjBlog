@@ -3,19 +3,17 @@ date: 2015-07-27 16:57:32
 tags:
 - Swift
 - 我
+- 随笔
 categories:
 - Swift
 
 ---
-#Alamofire是一个使用Swift语言写的一个网络库，操作很简单，结合ObjectMapper、AlamofireObjectMapper，可以轻松的将JSON数据转换为对象类型！
+Alamofire是一个使用Swift语言写的一个网络库，操作很简单，结合ObjectMapper、AlamofireObjectMapper，可以轻松的将JSON数据转换为对象类型！
+Alamofire：https://github.com/Alamofire/Alamofire
+ObjectMapper：https://github.com/Hearst-DD/ObjectMapper
+ALamoObjectmapper：https://github.com/tristanhimmelman/AlamofireObjectMapper
 
-#Alamofire：https://github.com/Alamofire/Alamofire
-
-#ObjectMapper：https://github.com/Hearst-DD/ObjectMapper
-
-#ALamoObjectmapper：https://github.com/tristanhimmelman/AlamofireObjectMapper
-
-#假设有个地址返回如下JSON数据：
+假设有个地址返回如下JSON数据：
 ## 代码块
 {% codeblock .compact http://underscorejs.org/#compact Underscore.js %}
 {
@@ -64,9 +62,9 @@ categories:
 
 {% endcodeblock %}
 
-#使用对象的概念来解读这段JSON数据，它包含Meta和Product：Meta是一个对象，Products是一个数组类型，包含了多个Product对象。
+使用对象的概念来解读这段JSON数据，它包含Meta和Product：Meta是一个对象，Products是一个数组类型，包含了多个Product对象。
+我们首先使用ObjectMapper库定义的规则，来写一个实体类。
 
-#我们首先使用ObjectMapper库定义的规则，来写一个实体类。
 {% codeblock .compact http://underscorejs.org/#compact Underscore.js %}
 class Meta : Mappable{
     var total:String?
@@ -123,7 +121,7 @@ class Product : Mappable{
 }
 {% endcodeblock %}
 
-#每个实体类都实现了Mappable协议。这仅仅是JSON数据中的两个对象，现在我们要再声明下整个JSON数据的对象定义，它将作为顶层包含着Meta类和Product类：
+每个实体类都实现了Mappable协议。这仅仅是JSON数据中的两个对象，现在我们要再声明下整个JSON数据的对象定义，它将作为顶层包含着Meta类和Product类：
 
 {% codeblock .compact http://underscorejs.org/#compact Underscore.js %}
 
@@ -142,7 +140,8 @@ class ProductResponse:Mappable{
 }
 
 {% endcodeblock %}
-#接下来，就可以使用Alamofire来操作了。这时候，可以使用AlamofireObjectMapper库，它使用extension扩展了Alamofire的response方法：
+
+接下来，就可以使用Alamofire来操作了。这时候，可以使用AlamofireObjectMapper库，它使用extension扩展了Alamofire的response方法：
 
 {% codeblock .compact http://underscorejs.org/#compact Underscore.js %}
 
