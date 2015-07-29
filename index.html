@@ -107,7 +107,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Swift/" style="font-size: 10px;">Swift</a> <a href="/tags/我/" style="font-size: 10px;">我</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a>
+						<a href="/tags/Swift/" style="font-size: 10px;">Swift</a> <a href="/tags/iOS/" style="font-size: 10px;">iOS</a> <a href="/tags/我/" style="font-size: 20px;">我</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a>
 					</div>
 				</section>
 				
@@ -170,6 +170,70 @@
 	</div>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-15-7-29" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/07/29/15-7-29/" class="article-date">
+  	<time datetime="2015-07-29T15:02:13.000Z" itemprop="datePublished">2015-07-29</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/07/29/15-7-29/">Cocoapods降低版本及卸载</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>有的时候我们需要降低Cocoapods的版本来解决第三方库的兼容问题.<br>一. 移除pod组件<br>这条指令会告诉你Cocoapods组件装在哪里 :<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">which</span> pod</span><br></pre></td></tr></table></figure><br>你可以手动移除这个组件 :<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo rm -rf <span class="tag">&lt;<span class="title">path</span>&gt;</span></span><br></pre></td></tr></table></figure><br>二. 移除 RubyGems 中的 Cocoapods程序包<br>Q: RubyGems是什么?<br>A: RubyGems（简称 gems）是一个用于对 Ruby组件进行打包的 Ruby 打包系统。 它提供一个分发 Ruby 程序和库的标准格式，还提供一个管理程序包安装的工具。<br>查看gems中本地程序包<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ gem <span class="type">list</span></span><br></pre></td></tr></table></figure><br>输出<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">*** <span class="tag">LOCAL</span> <span class="tag">GEMS</span> ***</span><br><span class="line"><span class="tag">activesupport</span> (4<span class="class">.1</span><span class="class">.8</span>, 3<span class="class">.2</span><span class="class">.21</span>)</span><br><span class="line"><span class="tag">bigdecimal</span> (1<span class="class">.2</span><span class="class">.0</span>)</span><br><span class="line"><span class="tag">CFPropertyList</span> (2<span class="class">.2</span><span class="class">.8</span>)</span><br><span class="line"><span class="tag">claide</span> (0<span class="class">.7</span><span class="class">.0</span>)</span><br><span class="line"><span class="tag">cocoapods</span> (0<span class="class">.35</span><span class="class">.0</span>, 0<span class="class">.34</span><span class="class">.1</span>, 0<span class="class">.34</span><span class="class">.0</span>)</span><br><span class="line"><span class="tag">cocoapods-core</span> (0<span class="class">.35</span><span class="class">.0</span>, 0<span class="class">.34</span><span class="class">.1</span>, 0<span class="class">.34</span><span class="class">.0</span>)</span><br><span class="line"><span class="tag">cocoapods-downloader</span> (0<span class="class">.8</span><span class="class">.0</span>, 0<span class="class">.7</span><span class="class">.2</span>)</span><br><span class="line"><span class="tag">cocoapods-plugins</span> (0<span class="class">.3</span><span class="class">.2</span>)</span><br><span class="line"><span class="tag">cocoapods-trunk</span> (0<span class="class">.4</span><span class="class">.1</span>, 0<span class="class">.2</span><span class="class">.0</span>)</span><br><span class="line"><span class="tag">cocoapods-try</span> (0<span class="class">.4</span><span class="class">.2</span>)</span><br><span class="line"><span class="tag">colored</span> (1<span class="class">.2</span>)</span><br><span class="line"><span class="tag">escape</span> (0<span class="class">.0</span><span class="class">.4</span>)</span><br><span class="line"><span class="tag">fuzzy_match</span> (2<span class="class">.0</span><span class="class">.4</span>)</span><br><span class="line"><span class="tag">i18n</span> (0<span class="class">.6</span><span class="class">.11</span>)</span><br><span class="line"><span class="tag">io-console</span> (0<span class="class">.4</span><span class="class">.2</span>)</span><br><span class="line"><span class="tag">json</span> (1<span class="class">.7</span><span class="class">.7</span>)</span><br><span class="line"><span class="tag">json_pure</span> (1<span class="class">.8</span><span class="class">.1</span>)</span><br><span class="line"><span class="tag">libxml-ruby</span> (2<span class="class">.6</span><span class="class">.0</span>)</span><br><span class="line"><span class="tag">minitest</span> (5<span class="class">.4</span><span class="class">.3</span>, 4<span class="class">.3</span><span class="class">.2</span>)</span><br><span class="line"><span class="tag">molinillo</span> (0<span class="class">.1</span><span class="class">.2</span>)</span><br><span class="line"><span class="tag">multi_json</span> (1<span class="class">.10</span><span class="class">.1</span>)</span><br><span class="line"><span class="tag">nap</span> (0<span class="class">.8</span><span class="class">.0</span>)</span><br><span class="line"><span class="tag">netrc</span> (0<span class="class">.7</span><span class="class">.8</span>)</span><br><span class="line"><span class="tag">nokogiri</span> (1<span class="class">.5</span><span class="class">.6</span>)</span><br><span class="line"><span class="tag">open4</span> (1<span class="class">.3</span><span class="class">.4</span>)</span><br><span class="line"><span class="tag">psych</span> (2<span class="class">.0</span><span class="class">.0</span>)</span><br><span class="line"><span class="tag">rake</span> (0<span class="class">.9</span><span class="class">.6</span>)</span><br><span class="line"><span class="tag">rdoc</span> (4<span class="class">.0</span><span class="class">.0</span>)</span><br><span class="line"><span class="tag">sqlite3</span> (1<span class="class">.3</span><span class="class">.7</span>)</span><br><span class="line"><span class="tag">test-unit</span> (2<span class="class">.0</span><span class="class">.0</span><span class="class">.0</span>)</span><br><span class="line"><span class="tag">thread_safe</span> (0<span class="class">.3</span><span class="class">.4</span>)</span><br><span class="line"><span class="tag">tzinfo</span> (1<span class="class">.2</span><span class="class">.2</span>)</span><br><span class="line"><span class="tag">xcodeproj</span> (0<span class="class">.20</span><span class="class">.2</span>, 0<span class="class">.19</span><span class="class">.4</span>)</span><br></pre></td></tr></table></figure></p>
+<p>发现Cocoapods的程序包<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">cocoapods</span> (0<span class="class">.35</span><span class="class">.0</span>, 0<span class="class">.34</span><span class="class">.1</span>, 0<span class="class">.34</span><span class="class">.0</span>)</span><br><span class="line"><span class="tag">cocoapods-core</span> (0<span class="class">.35</span><span class="class">.0</span>, 0<span class="class">.34</span><span class="class">.1</span>, 0<span class="class">.34</span><span class="class">.0</span>)</span><br><span class="line"><span class="tag">cocoapods-downloader</span> (0<span class="class">.8</span><span class="class">.0</span>, 0<span class="class">.7</span><span class="class">.2</span>)</span><br><span class="line"><span class="tag">cocoapods-plugins</span> (0<span class="class">.3</span><span class="class">.2</span>)</span><br><span class="line"><span class="tag">cocoapods-trunk</span> (0<span class="class">.4</span><span class="class">.1</span>, 0<span class="class">.2</span><span class="class">.0</span>)</span><br><span class="line"><span class="tag">cocoapods-try</span> (0<span class="class">.4</span><span class="class">.2</span>)</span><br></pre></td></tr></table></figure></p>
+<p>移除程序包<br><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>sudo gem uninstall cocoapods -v <span class="number">0</span>.<span class="number">35.0</span></span><br></pre></td></tr></table></figure></p>
+<p>输出</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">Successfully</span> <span class="tag">uninstalled</span> <span class="tag">cocoapods-0</span><span class="class">.35</span><span class="class">.0</span></span><br></pre></td></tr></table></figure>
+<p>输入<br><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>sudo gem uninstall cocoapods-core -v <span class="number">0</span>.<span class="number">35.0</span></span><br></pre></td></tr></table></figure><br>输出<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">Successfully</span> <span class="tag">uninstalled</span> <span class="tag">cocoapods-core-0</span><span class="class">.35</span><span class="class">.0</span></span><br></pre></td></tr></table></figure><br>然后安装指定版本的Cocoapods<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo gem <span class="keyword">install</span> cocoapods -v <span class="number">0.34</span>.<span class="number">4</span></span><br></pre></td></tr></table></figure><br>安装成功后<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pod <span class="comment">--version</span></span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/我/">我</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/iOS/">iOS</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
   
     <article id="post-hjjnew" class="article article-type-post" itemscope itemprop="blogPost">
   
