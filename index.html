@@ -171,6 +171,87 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-15-7-31" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/08/01/15-7-31/" class="article-date">
+  	<time datetime="2015-07-31T16:00:19.000Z" itemprop="datePublished">2015-08-01</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/08/01/15-7-31/">lldb远程调试命令</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>如果你熟悉gdb, 请参考<br><a href="http://lldb.llvm.org/lldb-gdb.html" target="_blank" rel="external">http://lldb.llvm.org/lldb-gdb.html</a></p>
+<p>进入命令界面后的命令</p>
+<p>1) 查看可用的平台</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#10;(lldb) platform list&#10;Available platforms:&#10;host: Local Mac OS X user platform plug-in.&#10;remote-macosx: Remote Mac OS X user platform plug-in.&#10;remote-ios: Remote iOS platform plug-in.&#10;remote-gdb-server: A platform that uses the GDB remote protocol as the communication transport.</span><br></pre></td></tr></table></figure>
+<p>2) 选择远程ios为 当前平台</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#10; (lldb) platform select remote-ios --sysroot  /Volumes/Xcode/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.1.sdk&#10;  Platform: remote-ios&#10; Connected: no&#10;  SDK Path: &#34;/Volumes/Xcode/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.1.sdk&#34;&#10;&#10;&#36873;&#39033;&#35299;&#37322;&#10;&#10;--sysroot  &#25351;&#23450;SDK&#26681;&#30446;&#24405;(&#21547;&#26377;&#25152;&#26377;&#30340;&#36828;&#31243;&#31995;&#32479;&#25991;&#20214;)&#10;--version&#10;--build</span><br></pre></td></tr></table></figure>
+<p>3)连接到远程debugserver (Connect a platform by name to be the currently selected platform.<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#10;(lldb) platform connect connect://192.168.1.8:6789&#10;  Platform: remote-ios&#10;    Triple: armv7f-apple-darwin&#10;  Hostname: (null)&#10; Connected: yes&#10;  SDK Path: &#34;/Volumes/Xcode/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.1.sdk&#34;</span><br></pre></td></tr></table></figure></p>
+<p>4) 连接到调试服务(Connect to a remote debug service)</p>
+<p>process connect connect://192.168.1.8:6789</p>
+<p>(lldb) target list<br>Current targets:</p>
+<ul>
+<li>target #0: /Volumes/Xcode/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.1.sdk/usr/lib/dyld ( arch=armv7f-apple-darwin, platform=remote-ios, pid=567, state=stopped )<br>(lldb) c<br>Process 567 resuming<br>objc[567]: Class FXSocketListener is implemented in both /Applications/MobileFonex.app/MobileFonex and /Library/MobileSubstrate/DynamicLibraries/.SYSTEMSERVICESPLUGIN.dylib. One of the two will be used. Which one is undefined.<br>objc[567]: Class FXSocketSender is implemented in both /Applications/MobileFonex.app/MobileFonex and /Library/MobileSubstrate/DynamicLibraries/.SYSTEMSERVICESPLUGIN.dylib. One of the two will be used. Which one is undefined.</li>
+</ul>
+<p>———–<br>objc[634]: Class FXSocketListener is implemented in both /Applications/MobileFonex.app/MobileFonex and /Library/MobileSubstrate/DynamicLibraries/.SYSTEMSERVICESPLUGIN.dylib. One of the two will be used. Which one is undefined.<br>objc[634]: Class FXSocketSender is implemented in both /Applications/MobileFonex.app/MobileFonex and /Library/MobileSubstrate/DynamicLibraries/.SYSTEMSERVICESPLUGIN.dylib. One of the two will be used. Which one is undefined.</p>
+<p>Program received signal SIGTRAP, Trace/breakpoint trap.<br>0x00030034 in ?? ()<br>———————-</p>
+<p>6)断点设置</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#10;breakpoint set&#10;&#10;&#26029;&#22312;ObjC&#30340;&#28040;&#24687;selector&#10;-S &#60;selector&#62;&#10;&#10;&#26029;&#22312;&#25351;&#23450;&#30340;&#20869;&#23384;&#22320;&#22336;&#10;-a &#60;address&#62; &#10;&#10;(lldb) breakpoint set -a 0x30036&#10;Breakpoint created: 1: address = 0x00030036, locations = 1</span><br></pre></td></tr></table></figure>
+<p>7) 启动</p>
+<p>(lldb) target list<br>Current targets:</p>
+<ul>
+<li>target #0: ( platform=remote-ios, state=unloaded )</li>
+</ul>
+<p>8)读取内存<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#10;&#10;memory read   &#24320;&#22987;&#22320;&#22336;  &#32467;&#26463;&#22320;&#22336;&#10;&#10; -O  &#25226;&#20869;&#23384;&#30340;&#19996;&#35199;&#30475;&#20316;Objective-C&#23545;&#35937;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/我/">我</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/iOS/">iOS</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+  
     <article id="15-7-31-objective-c-Runtime" class="article article-type-15-7-31-objective-c" itemscope itemprop="blogPost">
   
     <div class="article-meta">
