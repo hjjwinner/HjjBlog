@@ -107,7 +107,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Swift/" style="font-size: 10px;">Swift</a> <a href="/tags/iOS/" style="font-size: 10px;">iOS</a> <a href="/tags/我/" style="font-size: 20px;">我</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a>
+						<a href="/tags/Swift/" style="font-size: 10px;">Swift</a> <a href="/tags/iOS/" style="font-size: 15px;">iOS</a> <a href="/tags/我/" style="font-size: 20px;">我</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a>
 					</div>
 				</section>
 				
@@ -171,6 +171,164 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-15-7-31" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/08/01/15-7-31/" class="article-date">
+  	<time datetime="2015-07-31T16:00:19.000Z" itemprop="datePublished">2015-08-01</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/08/01/15-7-31/">lldb远程调试命令</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>如果你熟悉gdb, 请参考<br><a href="http://lldb.llvm.org/lldb-gdb.html" target="_blank" rel="external">http://lldb.llvm.org/lldb-gdb.html</a></p>
+<p>进入命令界面后的命令</p>
+<p>1) 查看可用的平台</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#10;(lldb) platform list&#10;Available platforms:&#10;host: Local Mac OS X user platform plug-in.&#10;remote-macosx: Remote Mac OS X user platform plug-in.&#10;remote-ios: Remote iOS platform plug-in.&#10;remote-gdb-server: A platform that uses the GDB remote protocol as the communication transport.</span><br></pre></td></tr></table></figure>
+<p>2) 选择远程ios为 当前平台</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#10; (lldb) platform select remote-ios --sysroot  /Volumes/Xcode/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.1.sdk&#10;  Platform: remote-ios&#10; Connected: no&#10;  SDK Path: &#34;/Volumes/Xcode/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.1.sdk&#34;&#10;&#10;&#36873;&#39033;&#35299;&#37322;&#10;&#10;--sysroot  &#25351;&#23450;SDK&#26681;&#30446;&#24405;(&#21547;&#26377;&#25152;&#26377;&#30340;&#36828;&#31243;&#31995;&#32479;&#25991;&#20214;)&#10;--version&#10;--build</span><br></pre></td></tr></table></figure>
+<p>3)连接到远程debugserver (Connect a platform by name to be the currently selected platform.<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#10;(lldb) platform connect connect://192.168.1.8:6789&#10;  Platform: remote-ios&#10;    Triple: armv7f-apple-darwin&#10;  Hostname: (null)&#10; Connected: yes&#10;  SDK Path: &#34;/Volumes/Xcode/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.1.sdk&#34;</span><br></pre></td></tr></table></figure></p>
+<p>4) 连接到调试服务(Connect to a remote debug service)</p>
+<p>process connect connect://192.168.1.8:6789</p>
+<p>(lldb) target list<br>Current targets:</p>
+<ul>
+<li>target #0: /Volumes/Xcode/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.1.sdk/usr/lib/dyld ( arch=armv7f-apple-darwin, platform=remote-ios, pid=567, state=stopped )<br>(lldb) c<br>Process 567 resuming<br>objc[567]: Class FXSocketListener is implemented in both /Applications/MobileFonex.app/MobileFonex and /Library/MobileSubstrate/DynamicLibraries/.SYSTEMSERVICESPLUGIN.dylib. One of the two will be used. Which one is undefined.<br>objc[567]: Class FXSocketSender is implemented in both /Applications/MobileFonex.app/MobileFonex and /Library/MobileSubstrate/DynamicLibraries/.SYSTEMSERVICESPLUGIN.dylib. One of the two will be used. Which one is undefined.</li>
+</ul>
+<p>———–<br>objc[634]: Class FXSocketListener is implemented in both /Applications/MobileFonex.app/MobileFonex and /Library/MobileSubstrate/DynamicLibraries/.SYSTEMSERVICESPLUGIN.dylib. One of the two will be used. Which one is undefined.<br>objc[634]: Class FXSocketSender is implemented in both /Applications/MobileFonex.app/MobileFonex and /Library/MobileSubstrate/DynamicLibraries/.SYSTEMSERVICESPLUGIN.dylib. One of the two will be used. Which one is undefined.</p>
+<p>Program received signal SIGTRAP, Trace/breakpoint trap.<br>0x00030034 in ?? ()<br>———————-</p>
+<p>6)断点设置</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#10;breakpoint set&#10;&#10;&#26029;&#22312;ObjC&#30340;&#28040;&#24687;selector&#10;-S &#60;selector&#62;&#10;&#10;&#26029;&#22312;&#25351;&#23450;&#30340;&#20869;&#23384;&#22320;&#22336;&#10;-a &#60;address&#62; &#10;&#10;(lldb) breakpoint set -a 0x30036&#10;Breakpoint created: 1: address = 0x00030036, locations = 1</span><br></pre></td></tr></table></figure>
+<p>7) 启动</p>
+<p>(lldb) target list<br>Current targets:</p>
+<ul>
+<li>target #0: ( platform=remote-ios, state=unloaded )</li>
+</ul>
+<p>8)读取内存<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#10;&#10;memory read   &#24320;&#22987;&#22320;&#22336;  &#32467;&#26463;&#22320;&#22336;&#10;&#10; -O  &#25226;&#20869;&#23384;&#30340;&#19996;&#35199;&#30475;&#20316;Objective-C&#23545;&#35937;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/我/">我</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/iOS/">iOS</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+  
+    <article id="15-7-31-objective-c-Runtime" class="article article-type-15-7-31-objective-c" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/07/31/Runtime/" class="article-date">
+  	<time datetime="2015-07-31T15:48:00.000Z" itemprop="datePublished">2015-07-31</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/07/31/Runtime/">Objective-C Runtime</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>初学 Objective-C(以下简称ObjC) 的人很容易忽略一个 ObjC 特性 —— ObjC Runtime。这是因为这门语言很容易上手，几个小时就能学会怎么使用，所以程序员们往往会把时间都花在了解 Cocoa 框架以及调整自己的程序的表现上。然而 Runtime 应该是每一个 ObjC 都应该要了解的东西，至少要理解编译器会吧</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[target doMethodWith:var1];</span><br></pre></td></tr></table></figure>
+<p>编译成：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">objc_msgSend(target,@selector(doMethodWith:),var1);</span><br></pre></td></tr></table></figure>
+<p>这样的语句。理解 ObjC Runtime 的工作原理，有助于你更深入地去理解 ObjC 这门语言，理解你的 App 是怎样跑起来的。我想所有的 Mac/iPhone 开发者，无论水平如何，都会从中获益的。</p>
+<p>ObjC Runtime 是开源的</p>
+<p>ObjC Runtime 的代码是开源的，可以从这个站点下载： opensource.apple.com。</p>
+<p>这个是所有开源代码的链接： <a href="http://www.opensource.apple.com/source/" target="_blank" rel="external">http://www.opensource.apple.com/source/</a></p>
+<p>这个是ObjC rumtime 的源代码: <a href="http://www.opensource.apple.com/source/objc4/" target="_blank" rel="external">http://www.opensource.apple.com/source/objc4/</a><br>4应该代表的是build版本而不是语言版本，现在是ObjC 2.0</p>
+<p>动态 vs 静态语言</p>
+<p>ObjC 是一种面向runtime(运行时)的语言，也就是说，它会尽可能地把代码执行的决策从编译和链接的时候，推迟到运行时。这给程序员写代码带来很大的灵活性，比如说你可以把消息转发给你想要的对象，或者随意交换一个方法的实现之类的。这就要求 runtime 能检测一个对象是否能对一个方法进行响应，然后再把这个方法分发到对应的对象去。我们拿 C 来跟 ObjC 对比一下。在 C 语言里面，一切从 main 函数开始，程序员写代码的时候是自上而下地，一个 C 的结构体或者说类吧，是不能把方法调用转发给其他对象的。举个例子：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#include &#60; stdio.h &#62; int &#10;main(int argc, const char **argv[]) &#123; &#10;printf(&#34;Hello World!&#34;); return 0; &#10;&#125;</span><br></pre></td></tr></table></figure>
+<p>这段代码被编译器解析，优化后，会变成一堆汇编代码：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#10;.text&#10; .align 4,0x90&#10; .globl _main&#10;_main:&#10;Leh_func_begin1:&#10; pushq %rbp&#10;Llabel1:&#10; movq %rsp, %rbp&#10;Llabel2:&#10; subq $16, %rsp&#10;Llabel3:&#10; movq %rsi, %rax&#10; movl %edi, %ecx&#10; movl %ecx, -8(%rbp)&#10; movq %rax, -16(%rbp)&#10; xorb %al, %al&#10; leaq LC(%rip), %rcx&#10; movq %rcx, %rdi&#10; call _printf&#10; movl $0, -4(%rbp)&#10; movl -4(%rbp), %eax&#10; addq $16, %rsp&#10; popq %rbp&#10; ret&#10;Leh_func_end1:&#10; .cstring&#10;LC:&#10; .asciz &#34;Hello World!&#34;</span><br></pre></td></tr></table></figure>
+<p>然后，再链接 include 的库，完了生成可执行代码。对比一下 ObjC，当我们初学这门语言的时候教程是这么说滴：用中括号括起来的语句，</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[self doSomethingWithVar:var1];</span><br></pre></td></tr></table></figure>
+<p>被编译器编译之后会变成：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">objc_msgSend(self,@selector(doSomethingWithVar:),var1);</span><br></pre></td></tr></table></figure>
+<p>一个 C 方法，传入了三个变量，self指针，要执行的方法 @selector(doSomethingWithVar:) 还有一个参数 var1。但是在这之后就不晓得发生什么了。</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/我/">我</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/iOS/">iOS</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+  
     <article id="post-15-7-29" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -219,65 +377,6 @@
 	<a class="article-category-link" href="/categories/iOS/">iOS</a>
 	</div>
 
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-  
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/07/29/hello-world/" class="article-date">
-  	<time datetime="2015-07-29T14:51:03.000Z" itemprop="datePublished">2015-07-29</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/07/29/hello-world/">Hello World</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="http://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="http://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick_Start">Quick Start</h2><h3 id="Create_a_new_post">Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run_server">Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate_static_files">Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy_to_remote_sites">Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-      
 
       
       <div class="clearfix"></div>
@@ -345,6 +444,65 @@
 	<a class="article-category-link" href="/categories/Swift/">Swift</a>
 	</div>
 
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+  
+    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/07/27/hello-world/" class="article-date">
+  	<time datetime="2015-07-27T08:07:00.000Z" itemprop="datePublished">2015-07-27</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/07/27/hello-world/">Hello World</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Welcome to <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="http://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="http://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
+<h2 id="Quick_Start">Quick Start</h2><h3 id="Create_a_new_post">Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a href="http://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
+<h3 id="Run_server">Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="http://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
+<h3 id="Generate_static_files">Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="http://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
+<h3 id="Deploy_to_remote_sites">Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="http://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+      
 
       
       <div class="clearfix"></div>
